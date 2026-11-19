@@ -1,0 +1,36 @@
+{
+  "name": "pi-simple-stash",
+  "version": "0.1.0",
+  "description": "Single-slot prompt stash for pi: press Ctrl+Shift+S to set a draft aside and press it again to get it back.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Andrea Di Lisio",
+  "keywords": [
+    "pi-package",
+    "pi-extension",
+    "prompt",
+    "stash"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dili91/pi-simple-stash.git"
+  },
+  "homepage": "https://github.com/dili91/pi-simple-stash#readme",
+  "bugs": {
+    "url": "https://github.com/dili91/pi-simple-stash/issues"
+  },
+  "files": [
+    "simple-stash.ts",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "pi": {
+    "extensions": [
+      "./simple-stash.ts"
+    ]
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*"
+  }
+}
