@@ -1,7 +1,7 @@
 {
   "name": "pi-simple-stash",
   "version": "0.1.0",
-  "description": "Single-slot prompt stash for pi: press Ctrl+Shift+S to set a draft aside and press it again to get it back.",
+  "description": "Single-slot prompt stash for pi: set a draft aside with a shortcut and bring it back later.",
   "type": "module",
   "license": "MIT",
   "author": "Andrea Di Lisio",
