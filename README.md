@@ -1,31 +1,37 @@
 # pi-simple-stash
 
-A single-slot prompt stash for Pi, the way Claude Code's Ctrl+S stash works.
+[![npm](https://img.shields.io/npm/v/pi-simple-stash)](https://www.npmjs.com/package/pi-simple-stash)
+[![license](https://img.shields.io/npm/l/pi-simple-stash)](LICENSE)
 
-Press **Ctrl+Shift+S** with a draft to stash it and clear the editor. Press it again while the editor is empty to get the prompt back, unsent. Your stash survives sending messages; it is cleared by a session switch, `/reload`, or exit. It holds text only.
-
-Ctrl+Shift+S only reaches Pi as a distinct key when the terminal reports modifiers separately (Kitty keyboard protocol or xterm `modifyOtherKeys`). In a legacy terminal it arrives as plain Ctrl+S and nothing happens. Pick another key with the configuration below, or bind it to a function key.
+A single-slot prompt stash for [Pi](https://pi.dev): set the draft you are writing aside, clear the editor, and bring it back later. One prompt, one slot, no list — the behaviour of Claude Code's `Ctrl+S` stash.
 
 ## Install
+
+```sh
+pi install npm:pi-simple-stash
+```
+
+Run `/reload`, or restart Pi. From source instead:
 
 ```sh
 pi install git:github.com/dili91/pi-simple-stash
 ```
 
-Once the package is on npm, `pi install npm:pi-simple-stash` installs the same extension; update either source with `pi update --extensions`.
+Update either source with `pi update --extensions`.
 
-Run `/reload`, then press the shortcut on a draft and watch the editor clear.
+## Use
 
-Or copy the file directly, which skips package updates:
+| Press | Editor state | Result |
+|---|---|---|
+| Ctrl+Shift+S | draft | draft is held, editor clears |
+| Ctrl+Shift+S | empty | held draft comes back, unsent |
+| Ctrl+Shift+S | draft, stash held | warning, both left alone |
 
-```sh
-mkdir -p ~/.pi/agent/extensions
-cp simple-stash.ts ~/.pi/agent/extensions/
-```
+The stash survives sending messages. It lives in memory, so a session switch, `/reload`, or exit clears it. Text only.
 
 ## Configuration
 
-Set the `key` in a JSON file, project first then user:
+The shortcut defaults to Ctrl+Shift+S. Override it with a `key` in JSON, project first, then user:
 
 - `<project>/.pi/simple-stash.json`
 - `~/.pi/agent/simple-stash.json`
@@ -34,17 +40,25 @@ Set the `key` in a JSON file, project first then user:
 { "key": "ctrl+q" }
 ```
 
-The value uses Pi's key syntax (`ctrl+q`, `ctrl+alt+k`, `f2`, ...). Pi reads it when the extension loads, so run `/reload` after editing. Anything unreadable in the file, or a missing `key`, falls back to the default.
+The value uses Pi's key syntax (`ctrl+q`, `ctrl+alt+k`, `f2`). Pi reads it when the extension loads, so run `/reload` after editing. A missing file, unreadable JSON, or absent `key` falls back to the default.
 
-## Try it
+Ctrl+Shift+S needs a terminal that reports modifiers separately (Kitty keyboard protocol or xterm `modifyOtherKeys`). On a legacy terminal it arrives as plain Ctrl+S and does nothing — configure another key, such as `ctrl+q`.
 
-From this directory:
+## How it works
+
+[`simple-stash.ts`](simple-stash.ts) is one file with no dependencies. It registers a single Pi shortcut that reads the editor text and swaps it with an in-memory slot. Pi loads the TypeScript directly.
+
+## Development
+
+Try a local checkout without installing anything:
 
 ```sh
 pi -e ./simple-stash.ts
 ```
 
-## Notes
+## Links
 
-- With a stash already held and another draft in the editor, the shortcut warns and leaves both alone. Send or clear the draft first.
-- No dependencies or build step; Pi loads the TypeScript directly.
+- Repository: [github.com/dili91/pi-simple-stash](https://github.com/dili91/pi-simple-stash)
+- Issues: [github.com/dili91/pi-simple-stash/issues](https://github.com/dili91/pi-simple-stash/issues)
+- Changelog: [CHANGELOG.md](CHANGELOG.md)
+- License: [MIT](LICENSE)
